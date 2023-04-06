@@ -13,7 +13,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Like } from '../../like/entities/like.entity';
 import { Reply } from '../../reply/entities/reply.entity';
 
-@Entity('users')
+@Entity('users', { schema: 'public' })
 export class Users extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'user_id',

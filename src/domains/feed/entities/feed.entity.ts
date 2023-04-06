@@ -13,7 +13,7 @@ import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Beach } from '../../beach/entities/beach.entity';
 import { Like } from '../../like/entities/like.entity';
 
-@Entity()
+@Entity('feed', { schema: 'public' })
 export class Feed extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'feed_id',

@@ -5,7 +5,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Reply } from '../../reply/entities/reply.entity';
 import { Beach } from '../../beach/entities/beach.entity';
 
-@Entity()
+@Entity('like', { schema: 'public' })
 export class Like extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'like_id',

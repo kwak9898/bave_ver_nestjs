@@ -10,7 +10,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Like } from '../../like/entities/like.entity';
 
-@Entity('beach')
+@Entity('beach', { schema: 'public' })
 export class Beach extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'beach_id',

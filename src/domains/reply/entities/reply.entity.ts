@@ -9,10 +9,9 @@ import {
 import { BaseEntity } from '../../base/base.entity';
 import { Users } from '../../users/entities/users.entity';
 import { Feed } from '../../feed/entities/feed.entity';
-import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Like } from '../../like/entities/like.entity';
 
-@Entity()
+@Entity('reply', { schema: 'public' })
 export class Reply extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'reply_id',

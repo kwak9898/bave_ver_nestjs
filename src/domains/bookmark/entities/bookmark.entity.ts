@@ -5,7 +5,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Reply } from '../../reply/entities/reply.entity';
 import { Beach } from '../../beach/entities/beach.entity';
 
-@Entity('bookmark')
+@Entity('bookmark', { schema: 'public' })
 export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'bookmark_id',
