@@ -6,7 +6,8 @@ import { AppModule } from 'src/app.module';
 import { DataSource } from 'typeorm';
 import { RequestHelper } from 'src/utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/domains/users/dto/createuser.dto';
+import { UserDto } from 'src/domains/users/dto/user.dto';
+import { UsersFactory } from './factory/uesrs.factory';
 
 describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 테스트', () => {
   let app: INestApplication;
@@ -16,7 +17,7 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
 
   let requestHelper: RequestHelper;
   //   let authFactory: AuthFactory;
-  //   let userFactory: UserFactory;
+  let usersFactory: UsersFactory;
   let dataSource: DataSource;
 
   let userId: number | undefined;
@@ -35,10 +36,10 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
         UsersRepository,
         DatabaseModule,
         JwtService,
+        UsersFactory,
         // AuthService,
         // UsersService,
         // AuthFactory,
-        // UserFactory,
       ],
     }).compile();
 
@@ -47,13 +48,13 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
     // usersService = moduleFixture.get(UsersService);
 
     // authFactory = moduleFixture.get(AuthFactory);
-    // userFactory = moduleFixture.get(UserFactory);
+    usersFactory = moduleFixture.get(UsersFactory);
 
     dataSource = moduleFixture.get(DataSource);
     await dataSource.synchronize(true);
 
     // token = await authFactory.createTestToken();
-    // user = await userFactory.createManagerUser();
+    // user = await UsersFactory.createManagerUser();
 
     requestHelper = new RequestHelper(app, token);
 
@@ -75,6 +76,7 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
       expect(body.accessToken).not.toBeNull();
       expect(body.represhToken).not.toBeNull();
     });
+
     it('비밀번호를 틀렸을 경우 실패', async () => {
       // Given
       const email = 'testuser@gmail.com';
@@ -88,6 +90,7 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
 
       expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
     });
+
     it('존재하지 않는 email로 로그인 시도할 경우 실패', async () => {
       // Given
       const email = 'wrongemail@gmail.com';
@@ -100,6 +103,44 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
       const body = response.body;
 
       expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+    });
+  });
+
+  describe('로그아웃 테스트', async () => {
+    it('성공', async () => {
+      // Given
+      const testUser = await usersFactory.createTestUser();
+
+      const dto = new UserDto();
+      dto.email = testUser.email;
+      dto.password = testUser.password;
+      dto.refreshToken = testUser.jwtToken;
+
+      // When
+      const response = await requestHelper.post(`${AuthDomain}/sign-out`, dto);
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.OK);
+    });
+
+    it('refreshToken이 없을 경우 실패', async () => {
+      // Given
+      const testUser = await usersFactory.createTestUser();
+
+      const dto = new UserDto();
+      dto.email = testUser.email;
+      dto.password = testUser.password;
+
+      // When
+      const response = await requestHelper.post(`${AuthDomain}/sign-out`, dto);
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
+      expect(response.body.message).toBe('Unauthorized');
     });
   });
 });
