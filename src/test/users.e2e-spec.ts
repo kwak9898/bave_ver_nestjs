@@ -79,7 +79,7 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.CREATED);
+      expect(response.statusCode).toBe(HttpStatus.CREATED);
       expect(body.email).toBe(createUserDto.email);
       expect(body.username).toBe(createUserDto.username);
     });
@@ -100,7 +100,7 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
       expect(body.error).toBe('Bad Request');
     });
   });
@@ -115,7 +115,7 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.OK);
+      expect(response.statusCode).toBe(HttpStatus.OK);
       expect(body.userId).toBe(userId);
     });
 
@@ -129,7 +129,7 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
       // Then
       const body = response.body;
 
-      expect(response.body).toBe(HttpStatus.BAD_REQUEST);
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
       expect(body.error).toBe('Bad Request');
     });
   });

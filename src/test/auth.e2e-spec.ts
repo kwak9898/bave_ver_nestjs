@@ -8,7 +8,7 @@ import { RequestHelper } from 'src/utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/domains/users/dto/createuser.dto';
 
-describe('계정 생성/조회/수정/삭제 테스트', () => {
+describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 테스트', () => {
   let app: INestApplication;
 
   //   let usersService: UsersService;
@@ -26,7 +26,6 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
   let token;
   let user;
 
-  const UserDomain = '/users';
   const AuthDomain = '/auth';
 
   beforeAll(async () => {
@@ -60,77 +59,47 @@ describe('계정 생성/조회/수정/삭제 테스트', () => {
 
     await app.init();
   });
-
-  describe('계정 생성', () => {
+  describe('로그인 테스트', () => {
     it('성공', async () => {
       // Given
-      const createUserDto = new CreateUserDto();
-      createUserDto.email = 'testuser@gmail.com';
-      createUserDto.username = 'testuser';
-      createUserDto.password = 'testuser123@';
-      createUserDto.confirmPassword = 'testuser123@';
+      const email = 'testuser@gmail.com';
+      const password = 'testpasswor123@';
 
       // When
-      const response = await requestHelper.post(
-        `${AuthDomain}/sign-up`,
-        createUserDto,
-      );
+      const response = await requestHelper.post(`${AuthDomain}/sign-in`);
 
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.CREATED);
-      expect(body.email).toBe(createUserDto.email);
-      expect(body.username).toBe(createUserDto.username);
+      expect(response.statusCode).toBe(HttpStatus.OK);
+      expect(body.accessToken).not.toBeNull();
+      expect(body.represhToken).not.toBeNull();
     });
-
-    it('confirmPassword가 없으면 실패', async () => {
+    it('비밀번호를 틀렸을 경우 실패', async () => {
       // Given
-      const createUserDto = new CreateUserDto();
-      createUserDto.email = 'testuser@gmail.com';
-      createUserDto.username = 'testuser';
-      createUserDto.password = 'testuser123@';
+      const email = 'testuser@gmail.com';
+      const password = 'wrongpassword1234@';
 
       // When
-      const response = await requestHelper.post(
-        `{AuthDomain}/sign-up`,
-        createUserDto,
-      );
+      const response = await requestHelper.post(`${AuthDomain}/sign-in`);
 
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.BAD_REQUEST);
-      expect(body.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
     });
-  });
-  describe('계정 조회', () => {
-    it('특정 계정 조회 성공', async () => {
+    it('존재하지 않는 email로 로그인 시도할 경우 실패', async () => {
       // Given
-      userId = 1;
+      const email = 'wrongemail@gmail.com';
+      const password = 'testpassword123@';
 
       // When
-      const response = await requestHelper.get(`${UserDomain}/${userId}`);
+      const response = await requestHelper.post(`${AuthDomain}/sign-in`);
 
       // Then
       const body = response.body;
 
-      expect(response.status).toBe(HttpStatus.OK);
-      expect(body.userId).toBe(userId);
-    });
-
-    it('존재하지 않은 userId일 경우 특정 계정 조회 실패', async () => {
-      // Given
-      userId = null;
-
-      // When
-      const response = await requestHelper.get(`${UserDomain}/${userId}`);
-
-      // Then
-      const body = response.body;
-
-      expect(response.body).toBe(HttpStatus.BAD_REQUEST);
-      expect(body.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
     });
   });
 });
