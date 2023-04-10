@@ -6,7 +6,7 @@ import { AppModule } from 'src/app.module';
 import { DataSource } from 'typeorm';
 import { RequestHelper } from 'src/utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/domains/users/dto/createuser.dto';
+import { CreateUserDto } from 'src/domains/users/dto/createUser.dto';
 
 describe('계정 생성/조회/수정/삭제 테스트', () => {
   let app: INestApplication;

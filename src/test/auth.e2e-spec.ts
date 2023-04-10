@@ -8,6 +8,8 @@ import { RequestHelper } from 'src/utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from 'src/domains/users/dto/user.dto';
 import { UsersFactory } from './factory/uesrs.factory';
+import { ChangeUserDto } from 'src/domains/users/dto/changeUser.dto';
+import { USER_EXCEPTION } from 'src/exception/errorCode';
 
 describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 테스트', () => {
   let app: INestApplication;
@@ -141,6 +143,97 @@ describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 
 
       expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
       expect(response.body.message).toBe('Unauthorized');
+    });
+  });
+
+  describe('비밀번호 변경', () => {
+    it('성공', async () => {
+      // Given
+      const testUser = await usersFactory.createTestUser();
+      const dto = new ChangeUserDto();
+
+      userId = testUser.userId;
+      dto.password = 'change12345@';
+
+      // When
+      const response = await requestHelper.patch(
+        `${AuthDomain}/change-user/${userId}`,
+        dto,
+      );
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.OK);
+      expect(body.userId).toBe(userId);
+      expect(body.email).toBe(testUser.email);
+      expect(body.username).toBe(testUser.username);
+    });
+
+    it('userId가 없을 경우 실패', async () => {
+      // Given
+      const dto = new ChangeUserDto();
+
+      dto.password = 'failtest123@';
+      userId = null;
+
+      // When
+      const response = await requestHelper.patch(
+        `${AuthDomain}/change-user/${userId}`,
+        dto,
+      );
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+      expect(body.code).toBe(USER_EXCEPTION.USER_NOT_FOUND.code);
+      expect(body.message).toBe(USER_EXCEPTION.USER_NOT_FOUND.message);
+    });
+  });
+
+  describe('username 수정', () => {
+    it('성공', async () => {
+      // Given
+      const testUser = await usersFactory.createTestUser();
+      const dto = new ChangeUserDto();
+
+      dto.username = 'changeUsername';
+      userId = testUser.userId;
+
+      // When
+      const response = await requestHelper.patch(
+        `${AuthDomain}/change-user/${userId}`,
+        dto,
+      );
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+      expect(body.code).toBe(USER_EXCEPTION.USER_NOT_FOUND.code);
+      expect(body.message).toBe(USER_EXCEPTION.USER_NOT_FOUND.message);
+    });
+
+    it('userId가 없을 경우 실패', async () => {
+      // Given
+      const dto = new ChangeUserDto();
+
+      dto.username = 'failChange';
+      userId = null;
+
+      // When
+      const response = await requestHelper.patch(
+        `${AuthDomain}/change-user/${userId}`,
+        dto,
+      );
+
+      // Then
+      const body = response.body;
+
+      expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+      expect(body.code).toBe(USER_EXCEPTION.USER_NOT_FOUND.code);
+      expect(body.message).toBe(USER_EXCEPTION.USER_NOT_FOUND.message);
     });
   });
 });

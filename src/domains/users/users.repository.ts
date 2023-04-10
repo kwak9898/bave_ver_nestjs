@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Users } from './entities/users.entity';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from './dto/createuser.dto';
+import { CreateUserDto } from './dto/createUser.dto';
 
 @Injectable()
 export class UsersRepository extends Repository<Users> {
