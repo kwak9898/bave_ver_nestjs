@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 export class UsersFactory {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async createTestUser(users?: Users) {
+  async createTestUser(users?: Users): Promise<Users> {
     users = new Users();
     users.email = faker.internet.email();
     users.username = faker.internet.userName();
