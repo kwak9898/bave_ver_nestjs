@@ -30,7 +30,7 @@ export class Beach extends BaseEntity {
     comment: '구/군 이름',
     nullable: false,
   })
-  gugun_name: string;
+  gugunName: string;
 
   @Column('character varying', {
     name: 'beach_name',
