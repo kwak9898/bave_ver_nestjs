@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { bookmarkRepository } from 'src/domains/bookmark/boockmark.repository';
-import { Bookmark } from 'src/domains/bookmark/entities/bookmark.entity';
+import { bookmarkRepository } from '../../domains/bookmark/boockmark.repository';
+import { Bookmark } from '../../domains/bookmark/entities/bookmark.entity';
 
 @Injectable()
 export class BookmarkFactory {

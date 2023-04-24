@@ -1,17 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
-import { UsersRepository } from 'src/domains/users/users.repository';
-import { AppModule } from 'src/app.module';
+import { DatabaseModule } from '../database/database.module';
+import { UsersRepository } from '../domains/users/users.repository';
+import { AppModule } from '../app.module';
 import { DataSource } from 'typeorm';
-import { RequestHelper } from 'src/utils/test.utils';
+import { RequestHelper } from '../utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from 'src/domains/users/dto/user.dto';
 import { UsersFactory } from './factory/uesrs.factory';
-import { ChangeUserDto } from 'src/domains/users/dto/changeUser.dto';
-import { BEACH_EXCEPTION, USER_EXCEPTION } from 'src/exception/errorCode';
+import { BEACH_EXCEPTION } from '../exception/errorCode';
 import { BeachFactory } from './factory/beach.factory';
-import { BeachService } from 'src/domains/beach/beach.service';
+import { BeachService } from '../domains/beach/beach.service';
 
 describe('해수욕장 전체 조회/해수욕장 상세 조회 테스트', () => {
   let app: INestApplication;

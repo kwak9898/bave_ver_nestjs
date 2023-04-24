@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
-import { UsersRepository } from 'src/domains/users/users.repository';
-import { AppModule } from 'src/app.module';
+import { DatabaseModule } from '../database/database.module';
+import { UsersRepository } from '../domains/users/users.repository';
+import { AppModule } from '../app.module';
 import { DataSource } from 'typeorm';
-import { RequestHelper } from 'src/utils/test.utils';
+import { RequestHelper } from '../utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from 'src/domains/users/dto/user.dto';
+import { UserDto } from '../domains/users/dto/user.dto';
 import { UsersFactory } from './factory/uesrs.factory';
-import { ChangeUserDto } from 'src/domains/users/dto/changeUser.dto';
-import { USER_EXCEPTION } from 'src/exception/errorCode';
+import { ChangeUserDto } from '../domains/users/dto/changeUser.dto';
+import { USER_EXCEPTION } from '../exception/errorCode';
 
 describe('로그인/로그아웃/계정 비밀번호 변경 및 username 변경 테스트', () => {
   let app: INestApplication;

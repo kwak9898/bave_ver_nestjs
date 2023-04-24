@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Injectable } from '@nestjs/common';
-import { BeachRepository } from 'src/domains/beach/beach.repository';
-import { Beach } from 'src/domains/beach/entities/beach.entity';
+import { BeachRepository } from '../../domains/beach/beach.repository';
+import { Beach } from '../../domains/beach/entities/beach.entity';
 
 @Injectable()
 export class BeachFactory {

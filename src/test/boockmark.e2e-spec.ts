@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HttpStatus, INestApplication } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
-import { UsersRepository } from 'src/domains/users/users.repository';
-import { AppModule } from 'src/app.module';
+import { INestApplication } from '@nestjs/common';
+import { DatabaseModule } from '../database/database.module';
+import { UsersRepository } from '../domains/users/users.repository';
+import { AppModule } from '../app.module';
 import { DataSource } from 'typeorm';
-import { RequestHelper } from 'src/utils/test.utils';
+import { RequestHelper } from '../utils/test.utils';
 import { JwtService } from '@nestjs/jwt';
 import { UsersFactory } from './factory/uesrs.factory';
-import { BookmarkService } from 'src/domains/bookmark/bookmark.service';
-import { UsersService } from 'src/domains/users/users.service';
-import { AuthService } from 'src/domains/auth/auth.service';
+import { BookmarkService } from '../domains/bookmark/bookmark.service';
+import { UsersService } from '../domains/users/users.service';
+import { AuthService } from '../domains/auth/auth.service';
 import { BookmarkFactory } from './factory/bookmark.factory';
 
 describe('해수욕장 전체 조회/해수욕장 상세 조회 테스트', () => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Users } from 'src/domains/users/entities/users.entity';
-import { UsersRepository } from 'src/domains/users/users.repository';
+import { Users } from '../../domains/users/entities/users.entity';
+import { UsersRepository } from '../../domains/users/users.repository';
 import { faker } from '@faker-js/faker';
 import * as bcrypt from 'bcrypt';
 
