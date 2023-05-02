@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Users } from './entities/users.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -13,6 +13,11 @@ export class UsersRepository extends Repository<Users> {
     super(Users, dataSource.createEntityManager());
   }
 
+  /**
+   * 유저 생성
+   * @param createUserDto
+   * @returns
+   */
   async createUser(createUserDto: CreateUserDto): Promise<Users> {
     const { email, password, username } = createUserDto;
 
@@ -23,5 +28,14 @@ export class UsersRepository extends Repository<Users> {
     });
 
     return createUser;
+  }
+
+  /**
+   * 특정 유저 조회
+   * @param userId
+   * @returns
+   */
+  async findByUserId(userId: number): Promise<Users> {
+    return await this.findOne({ where: { userId } });
   }
 }
