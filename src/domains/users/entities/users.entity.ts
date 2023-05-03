@@ -13,7 +13,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Like } from '../../like/entities/like.entity';
 import { Reply } from '../../reply/entities/reply.entity';
 
-@Entity('users', { schema: 'public' })
+@Entity('users')
 export class Users extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'user_id',
@@ -21,7 +21,7 @@ export class Users extends BaseEntity {
   })
   userId: number;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'email',
     comment: '회원 이메일',
     nullable: false,
@@ -29,7 +29,7 @@ export class Users extends BaseEntity {
   })
   email: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'password',
     comment: '패스워드',
     nullable: false,
@@ -37,14 +37,14 @@ export class Users extends BaseEntity {
   })
   password: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'username',
     comment: '회원 사용 이름',
     nullable: false,
   })
   username: string;
 
-  @Column('character varying', {
+  @Column('longtext', {
     name: 'jwt_token',
     comment: 'jwt refresh token',
     nullable: true,

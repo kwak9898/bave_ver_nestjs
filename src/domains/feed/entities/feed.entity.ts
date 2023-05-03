@@ -13,7 +13,7 @@ import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Beach } from '../../beach/entities/beach.entity';
 import { Like } from '../../like/entities/like.entity';
 
-@Entity('feed', { schema: 'public' })
+@Entity()
 export class Feed extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'feed_id',
@@ -21,14 +21,14 @@ export class Feed extends BaseEntity {
   })
   feedId: number;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'content',
     comment: '피드 글',
     nullable: false,
   })
   content: string;
 
-  @Column('character varying', {
+  @Column('longtext', {
     name: 'feed_image',
     comment: 'feed image',
     nullable: true,

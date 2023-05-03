@@ -2,10 +2,9 @@ import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from '../../base/base.entity';
 import { Users } from '../../users/entities/users.entity';
 import { Feed } from '../../feed/entities/feed.entity';
-import { Reply } from '../../reply/entities/reply.entity';
 import { Beach } from '../../beach/entities/beach.entity';
 
-@Entity('bookmark', { schema: 'public' })
+@Entity('bookmark')
 export class Bookmark extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'bookmark_id',

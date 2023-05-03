@@ -10,7 +10,7 @@ import { Feed } from '../../feed/entities/feed.entity';
 import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Like } from '../../like/entities/like.entity';
 
-@Entity('beach', { schema: 'public' })
+@Entity('beach')
 export class Beach extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'beach_id',
@@ -18,35 +18,35 @@ export class Beach extends BaseEntity {
   })
   beachId: number;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'sido_name',
     comment: '시 이름',
     nullable: false,
   })
   sidoName: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'gugun_name',
     comment: '구/군 이름',
     nullable: false,
   })
-  gugunName: string;
+  gugun_name: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'beach_name',
     comment: '해수욕장 이름',
     nullable: false,
   })
   beachName: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'latitude',
     comment: '위도',
     nullable: false,
   })
   latitude: string;
 
-  @Column('character varying', {
+  @Column('varchar', {
     name: 'longitude',
     comment: '경도',
     nullable: false,
